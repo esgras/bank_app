@@ -1,0 +1,79 @@
+version: "3"
+
+services:
+  webserver1:
+    build: 
+      context: ./.docker/bin/webserver
+    container_name: 'png-webserver'
+    restart: 'always'
+    ports:
+      - "80:80"
+      - "443:443"
+    # links:
+    #    - mysql
+    #    - postgres
+    depends_on:
+        - postgres
+#    environment:
+#        - "DB_HOST=postgres"
+    volumes: 
+      - ${DOCUMENT_ROOT-./public}:/var/www/public
+      - ${PHP_INI-./.docker/config/php/php.ini}:/usr/local/etc/php/php.ini
+      - ${VHOSTS_DIR-./.docker/config/vhosts}:/etc/apache2/sites-enabled
+      - ${LOG_DIR-./.docker/logs/apache2}:/var/log/apache2
+      - .:/var/www
+    working_dir: /var/www
+  # mysql:
+  #    build: ./.docker/bin/mysql
+  #    container_name: 'png-mysql'
+  #    restart: 'always'
+  #    ports:
+  #      - "3306:3306"
+  #    volumes:
+  #      - ${MYSQL_DATA_DIR-./.docker/data/mysql}:/var/lib/mysql
+  #      - ${MYSQL_LOG_DIR-./.docker/logs/mysql}:/var/log/mysql
+  #    environment:
+  #      MYSQL_ROOT_PASSWORD: tiger
+  #      MYSQL_DATABASE: png
+  #      MYSQL_USER: png
+  #      MYSQL_PASSWORD: png
+  # phpmyadmin:
+  #   image: phpmyadmin/phpmyadmin
+  #   container_name: 'png-phpmyadmin'
+  #   links:
+  #     - mysql
+  #   environment:
+  #     PMA_HOST: mysql
+  #     PMA_PORT: 3306
+  #   ports:
+  #     - '8080:80'
+  #   volumes: 
+  #     - /sessions
+  # redis:
+  #   container_name: 'png-redis'
+  #   image: redis:latest
+  #   ports:
+  #     - "6379:6379"
+  postgres:
+    image: postgres
+    restart: always
+    container_name: 'png-postgres'
+    environment:
+      POSTGRES_PASSWORD: 1111
+      POSTGRES_USER: bank
+      POSTGRES_DB: bank
+    volumes:
+        - ${POSTGRES_DATA_DIR-./.docker/data/postgres}:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+#  db:
+#    image: postgres
+#    ports:
+#      - 5432:5432
+#    restart: always
+#    volumes:
+#      - "db_sql:/var/lib/mysql"
+#    environment:
+#      POSTGRES_USER: root
+#      POSTGRES_PASSWORD: password
+#      POSTGRES_DB: postgres_db
