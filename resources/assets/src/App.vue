@@ -1,21 +1,27 @@
 <template>
   <div id="app">
-    <nav>
-      <!--<router-link to='/'>Cards</router-link>-->
-      <!--<router-link to='/'>Cards</router-link>-->
-      <!--<router-link to='/transfer'>Transfer</router-link>-->
-      <!--<router-link to='/transfer'>Transfer</router-link>-->
-    </nav>
-    <!--<router-view></router-view>-->
-    <!--<transfer-form></transfer-form>-->
-    <list></list>
+    <card v-if="isVisibleCardPage('card')"></card>
+    <deposit-form v-if="isVisibleCardPage('depositForm')"></deposit-form>
+    <withdraw-form v-if="isVisibleCardPage('withdrawForm')"></withdraw-form>
+    <list v-if="isVisibleCardPage('list')"></list>
+    <transfer-form v-if="isVisibleCardPage('transferForm')"></transfer-form>
+    <pin-code-modal v-if="pinCodeModalVisible"></pin-code-modal>
+    <info-modal v-if="infoModalVisible"></info-modal>
+
+
+
   </div>
 </template>
 
 <script>
 
-import TransferForm from './components/TransferForm.vue';
+import TransferForm from './components/Forms/TransferForm.vue';
 import List from './components/List.vue';
+import Card from './components/Card.vue';
+import DepositForm from './components/Forms/DepositForm.vue'
+import WithdrawForm from './components/Forms/WithdrawForm.vue'
+import PinCodeModal from './components/PinCodeModal.vue'
+import InfoModal from './components/InfoModal.vue'
 
 export default {
     name: 'app',
@@ -26,36 +32,23 @@ export default {
     },
     components: {
         TransferForm,
-        List
+        List,
+        Card,
+        DepositForm,
+        WithdrawForm,
+        PinCodeModal,
+        InfoModal
+    },
+    computed: {
+        isVisibleCardPage() {
+            return (page) => page == this.$store.getters.cardPage;
+        },
+        pinCodeModalVisible() {
+            return this.$store.getters.pinCodeModalVisible;
+        },
+        infoModalVisible() {
+            return this.$store.getters.infoModalVisible;
+        }
     }
 }
-
-//import List from './components/List.vue'
-//import BookForm from './components/BookForm.vue'
-//import BookView from './components/BookView.vue'
-
-//export default {
-//  name: 'app',
-//  data () {
-//    return {
-//      msg: 'Welcome to Your Vue.js App'
-//    }
-//  },
-//  components: {
-//    List,
-//    BookForm,
-//    BookView
-//  },
-//  computed: {
-//      formVisible() {
-//          return this.$store.getters.formVisible;
-//      },
-//      listVisible() {
-//          return this.$store.getters.listVisible;
-//      },
-//      viewVisible() {
-//          return this.$store.getters.viewVisible;
-//      }
-//  }
-//}
 </script>

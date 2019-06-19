@@ -11,6 +11,15 @@
           crossorigin="anonymous">
     <title>@yield('title')</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <style>
+        .navbar {
+            margin-bottom: 50px;
+        }
+        .nav-item {
+            min-width: 70px;
+        }
+    </style>
+    @yield('stylesheets')
 </head>
 <body>
 <div class="container">

@@ -40,6 +40,8 @@ class BookController extends Controller
     public function check()
     {
         $user = User::find(1);
+        dump($user->cards()->getResults()->first()->id); die;
+        
         $cards = $user->cards();
         dump($cards->getResults()); die;
     }
@@ -135,9 +137,31 @@ class BookController extends Controller
 
     public function vue()
     {
+
+//        RunUser::where('user_id',$id)->leftjoin('runs','runs.id','=','run_user.run_id')->first();
+//
+//        Product::from('products as p')
+//            ->join('product_category as pc','p.id','=','pc.product_id')
+//            ->select('p.*')
+//            ->where('p.active',1)
+//            ->whereIn('pc.category_id', ['223', '15'])
+//            ->get();
+
+        $cards = Card::where('owner_id', auth()->user()->id)
+                    ->select('id', 'number', 'amount', 'created_at', 'pin')
+                    ->orderBy('created_at', 'desc')
+                    ->with('operations')
+                    ->get();
+
+//        $cards = Card::from('cards ac c')
+//            ->leftJoin('operations op', 'op.card_id', '=', 'c.id')
+//            ->where('owner_id', \Auth::user()->id)
+//            ->get();
+
         return view('vue', [
-            'cards' => Card::where('owner_id', \Auth::user()->id)
-                ->orderBy('created_at', 'DESC')->get()
+//            'cards' => Card::where('owner_id', \Auth::user()->id)
+//                ->orderBy('created_at', 'DESC')->get()
+            'cards' => $cards
         ]);
     }
 }

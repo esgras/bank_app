@@ -1,6 +1,6 @@
 import CardForm from '../components/CardForm.vue';
 import List from '../components/List.vue';
-import TransferForm from '../components/TransferForm.vue';
+import TransferForm from '../components/Forms/TransferForm.vue';
 
 let routes = [
     {path: '/', component: List},
