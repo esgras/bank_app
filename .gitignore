@@ -14,3 +14,5 @@ yarn-error.log
 .docker/data
 !.docker/data/.gitkeep
 !docker/data/postgress/.gitkeep
+.docker/data/logs
+!.docker/data/logs/.gitkeep

@@ -15,7 +15,7 @@ class Card extends Model
 
     public function operations()
     {
-        return $this->hasMany('App\Entity\Card\Operation', 'card_id');
+        return $this->hasMany('App\Entity\Card\Operation', 'card_id')->orderBy('created_at', 'desc');
     }
 
     public function addAmount($amount)
@@ -34,4 +34,5 @@ class Card extends Model
 
         return $this;
     }
+
 }
