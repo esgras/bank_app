@@ -2,13 +2,19 @@
 
 use Illuminate\Http\Request;
 
+
+Route::get('/user', function() {
+    return \App\User::find(1);
+})->middleware('auth:api');
+
 Route::prefix('v1')->group(function () {
-    Route::group(['namespace' => 'Api', 'prefix' => 'cards', 'middleware' => ['web', 'auth'] ], function () {
+    Route::group(['namespace' => 'Api', 'prefix' => 'cards', 'middleware' => 'auth:api'], function () {
         Route::get('/', 'CardController@index');
         Route::post('/', 'CardController@store');
-//        Route::put('/{id}', 'BookController@update');
-//        Route::get('/{id}', 'BookController@show')->where('id', '\d+');
-//        Route::delete('/{id}', 'BookController@destroy');
-//        Route::get('/search/{query?}', 'BookController@search');
+        Route::post('/add-money', 'CardController@addMoney');
+        Route::post('/money-transfer', 'CardController@moneyTransfer');
+        Route::post('/withdraw-money', 'CardController@withdrawMoney');
+        Route::post('/check-pin', 'CardController@checkPin');
+        Route::post('/change-pin-code', 'CardController@changePinCode');
     });
 });
