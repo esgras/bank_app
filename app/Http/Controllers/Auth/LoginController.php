@@ -62,7 +62,7 @@ class LoginController extends Controller
 
     protected function redirectTo()
     {
-        return '/vue';
+        return route('account');
     }
 
 }

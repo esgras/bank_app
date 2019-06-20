@@ -137,7 +137,6 @@ export default new Vuex.Store({
             context.state.errorText = '';
         },
         transferMoney(context, payload) {
-            context.dispatch('dropOldAjax');
             let destinationCardNumber = payload.destinationCard.replace(/-/g, '');
 
             let res = reqwest({
@@ -155,7 +154,7 @@ export default new Vuex.Store({
                         sourceCard.operations.splice(0, 0, resp.sourceCardOperation);
                         sourceCard.amount -= payload.amount;
 
-                        let destinationCard = context.state.cards.find(card => card.number === destinationCardNumber);
+                        let destinationCard = context.state.cards.find(card => card.number == destinationCardNumber);
                         if (destinationCard) {
                             destinationCard.amount = +destinationCard.amount + +payload.amount;
                             destinationCard.operations.splice(0, 0, resp.destinationCardOperation);

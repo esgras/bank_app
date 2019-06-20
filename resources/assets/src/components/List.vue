@@ -66,7 +66,6 @@
             },
             transferMoney() {
                 this.$store.dispatch('showCardPage', {page: 'transferForm', id: null});
-                console.log(this.$store.getters.cardPage);
             }
         }
     }
