@@ -28,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/account';
 
     /**
      * Create a new controller instance.
@@ -71,5 +71,10 @@ class RegisterController extends Controller
         $user->rollApiKey();
 
         return $user;
+    }
+
+    public function redirectTo()
+    {
+        return route('account');
     }
 }
