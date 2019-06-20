@@ -46,5 +46,6 @@ RUN docker-php-ext-install -j$(nproc) gd
 # Enable apache modules
 RUN a2enmod rewrite headers
 ADD . /var/www
-RUN chmod -R 777 /var/www/storage
-RUN chown -R www-data:www-data /var/www/storage
+RUN chown -R www-data:www-data /var/www
+#RUN chmod -R 777 /var/www/storage
+#RUN chown -R www-data:www-data /var/www/storage
